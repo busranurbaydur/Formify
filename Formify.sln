@@ -1,0 +1,40 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.12.35424.110
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Formify.Domain", "Formify.Domain\Formify.Domain.csproj", "{B8F21AEF-358F-4806-BA11-C88A2D1BB0C9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Formify.DataAccess", "Formify.DataAccess\Formify.DataAccess.csproj", "{42AE87CC-C8AB-41BE-81D4-4CEF3EEC528C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Formify.Business", "Formify.Business\Formify.Business.csproj", "{51AAD6BD-4487-407B-B852-33F15E934064}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Formify.WebApp", "Formify.WebApp\Formify.WebApp.csproj", "{CBB58017-C82B-4107-9597-2B568A2624CD}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{B8F21AEF-358F-4806-BA11-C88A2D1BB0C9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B8F21AEF-358F-4806-BA11-C88A2D1BB0C9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B8F21AEF-358F-4806-BA11-C88A2D1BB0C9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B8F21AEF-358F-4806-BA11-C88A2D1BB0C9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{42AE87CC-C8AB-41BE-81D4-4CEF3EEC528C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{42AE87CC-C8AB-41BE-81D4-4CEF3EEC528C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{42AE87CC-C8AB-41BE-81D4-4CEF3EEC528C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{42AE87CC-C8AB-41BE-81D4-4CEF3EEC528C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{51AAD6BD-4487-407B-B852-33F15E934064}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{51AAD6BD-4487-407B-B852-33F15E934064}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{51AAD6BD-4487-407B-B852-33F15E934064}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{51AAD6BD-4487-407B-B852-33F15E934064}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CBB58017-C82B-4107-9597-2B568A2624CD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CBB58017-C82B-4107-9597-2B568A2624CD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CBB58017-C82B-4107-9597-2B568A2624CD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CBB58017-C82B-4107-9597-2B568A2624CD}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

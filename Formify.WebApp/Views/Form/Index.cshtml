@@ -1,0 +1,154 @@
+﻿@model FormManagementViewModel
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h1>Form Listesi</h1>
+      <form asp-controller="Account" asp-action="Logout" method="post" asp-antiforgery="true">
+        <button type="submit" class="btn btn-secondary">Çıkış Yap</button>
+    </form>
+</div>
+<form method="get" asp-action="Index" class="mb-4">
+    <div class="form-group">
+        <input type="text" name="search" value="@Model.FormList.SearchQuery" placeholder="İsme göre ara..." class="form-control" />
+    </div>
+    <button type="submit" class="btn btn-primary">Ara</button>
+</form>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Ad</th>
+            <th>Açıklama</th>
+            <th>İşlemler</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var form in Model.FormList.Forms)
+        {
+            <tr>
+                <td>@form.Name</td>
+                <td>@form.Description</td>
+                <td>
+                     <a asp-controller="Form" asp-action="Details" asp-route-formId="@form.Id" class="btn btn-info">Detaylar</a>
+
+                    <!-- Delete Button -->
+                    <form asp-action="Delete" asp-route-id="@form.Id" method="post" style="display:inline;" onsubmit="return confirm('Bu formu silmek istediğinizden emin misiniz?');">
+                        <button type="submit" class="btn btn-danger">Sil</button>
+                    </form>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<!-- Create New Form Button -->
+<button type="button" class="btn btn-primary" onclick="openCreateFormModal()">Yeni Form Oluştur</button>
+
+<!-- Create Modal -->
+<div class="modal fade" id="createFormModal" tabindex="-1" role="dialog" aria-labelledby="createFormModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <form asp-action="Create" method="post" id="createForm">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="createFormModalLabel">Yeni Form Oluştur</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="closeCreateFormModal()">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label asp-for="FormCreate.Name">Ad</label>
+                        <input asp-for="FormCreate.Name" class="form-control" />
+                        <span asp-validation-for="FormCreate.Name" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="FormCreate.Description">Açıklama</label>
+                        <textarea asp-for="FormCreate.Description" class="form-control"></textarea>
+                        <span asp-validation-for="FormCreate.Description" class="text-danger"></span>
+                    </div>
+
+                    <h5>Alanlar</h5>
+                    <button type="button" class="btn btn-secondary" onclick="addField()">Alan Ekle</button>
+                    <div id="fields-container"></div>
+                    <span id="field-error" class="text-danger" style="display: none;">En az bir alan eklenmelidir.</span>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="closeCreateFormModal()">Kapat</button>
+                    <button type="submit" class="btn btn-primary">Kaydet</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+   <script>
+    function openCreateFormModal() {
+        $('#createFormModal').modal('show');
+    }
+
+    function closeCreateFormModal() {
+        $('#createFormModal').modal('hide');
+    }
+
+    let fieldIndex = 0;
+    let isFieldAdded = false;
+
+    function addField() {
+        const container = document.getElementById("fields-container");
+
+        const fieldHtml = `
+            <div class="form-group">
+                <label>Alan Adı</label>
+                <input type="text" name="FormCreate.Fields[${fieldIndex}].Name" class="form-control" required />
+                <span class="text-danger" style="display: none;" id="field-name-error-${fieldIndex}">Alan adı zorunludur.</span>
+            </div>
+            <div class="form-group form-check">
+                <input type="checkbox" name="FormCreate.Fields[${fieldIndex}].Required" class="form-check-input" id="requiredCheck${fieldIndex}" />
+                <label class="form-check-label" for="requiredCheck${fieldIndex}">Zorunlu mu?</label>
+            </div>
+            <div class="form-group">
+                <label>Veri Tipi</label>
+                <select name="FormCreate.Fields[${fieldIndex}].DataType" class="form-control">
+                    <option value="STRING">Metin</option>
+                    <option value="NUMBER">Sayı</option>
+                </select>
+            </div>`;
+
+        container.insertAdjacentHTML("beforeend", fieldHtml);
+        fieldIndex++;
+        isFieldAdded = true;
+    }
+
+    document.getElementById("createForm").addEventListener("submit", function(event) {
+        let hasEmptyFieldName = false;
+
+        // Tüm dinamik olarak eklenen Alan Adı alanlarını kontrol et
+        for (let i = 0; i < fieldIndex; i++) {
+            const fieldNameInput = document.querySelector(`[name="FormCreate.Fields[${i}].Name"]`);
+            const errorSpan = document.getElementById(`field-name-error-${i}`);
+
+            if (fieldNameInput && fieldNameInput.value.trim() === "") {
+                errorSpan.style.display = "block";
+                hasEmptyFieldName = true;
+            } else if (errorSpan) {
+                errorSpan.style.display = "none";
+            }
+        }
+
+        if (!isFieldAdded || hasEmptyFieldName) {
+            event.preventDefault(); // Form gönderimini engelle
+            document.getElementById("field-error").style.display = isFieldAdded ? "none" : "block"; // Genel hata mesajı
+        } else {
+            document.getElementById("field-error").style.display = "none"; // Genel hata mesajını gizle
+        }
+    });
+</script>
+
+     @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

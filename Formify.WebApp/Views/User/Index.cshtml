@@ -1,0 +1,33 @@
+﻿@model UserListViewModel
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>User List</h2>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Username</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var user in Model.Users)
+        {
+            <tr>
+                <td>@user.Username</td>
+                <td>
+                    <a asp-action="Details" asp-route-id="@user.Id" class="btn btn-info">Details</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<div>
+    <a asp-action="Create" class="btn btn-primary">Create New User</a>
+</div>
+

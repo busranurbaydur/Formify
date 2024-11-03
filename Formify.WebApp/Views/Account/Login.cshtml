@@ -1,0 +1,53 @@
+﻿@model LoginViewModel
+
+@{
+    ViewData["Title"] = "Login";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Giriş Yap</h2>
+
+@if (!ViewData.ModelState.IsValid)
+{
+    <div class="alert alert-danger">
+        <ul>
+            @foreach (var error in ViewData.ModelState.Values.SelectMany(v => v.Errors))
+            {
+                <li>@error.ErrorMessage</li>
+            }
+        </ul>
+    </div>
+}
+
+<form asp-action="Login" method="post">
+    <div class="form-group">
+        <label asp-for="Username" class="control-label">Kullanıcı Adı</label>
+        <input asp-for="Username" class="form-control" />
+        <span asp-validation-for="Username" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Password" class="control-label">Şifre</label>
+        <input asp-for="Password" class="form-control" type="password" />
+        <span asp-validation-for="Password" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <input asp-for="RememberMe" type="checkbox" /> Beni Hatırla
+    </div>
+
+    <div class="form-group">
+        <button type="submit" class="btn btn-primary">Giriş</button>
+    </div>
+</form>
+
+<!-- Kayıt Ol butonunu ekliyoruz -->
+<div class="form-group mt-3">
+    <p>Henüz hesabınız yok mu? <a asp-action="Register" asp-controller="Account" class="btn btn-link">Kayıt Ol</a></p>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

@@ -1,0 +1,27 @@
+﻿@using Formify.Domain.Enums
+@model FormDetailsViewModel
+
+@{
+    ViewData["Title"] = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>@Model.Name</h2>
+<p>@Model.Description</p>
+
+<form method="post">
+    @foreach (var field in Model.Fields)
+    {
+        <div class="form-group">
+            <label>@field.Name</label>
+            @if (field.DataType == DataType.STRING)
+            {
+                <input type="text" class="form-control" name="fields[@field.Name]" />
+            }
+            else if (field.DataType == DataType.NUMBER)
+            {
+                <input type="number" class="form-control" name="fields[@field.Name]" />
+            }
+        </div>
+    }
+</form>
